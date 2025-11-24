@@ -33,6 +33,7 @@ logger = logging.getLogger()
 
 def init_connection_pool() -> sqlalchemy.engine.base.Engine:
     """Sets up connection pool for the app."""
+    logger.info("init connection pool")
     # use a TCP socket when INSTANCE_HOST (e.g. 127.0.0.1) is defined
     if os.environ.get("INSTANCE_HOST"):
         return connect_tcp_socket()
@@ -45,6 +46,7 @@ def init_connection_pool() -> sqlalchemy.engine.base.Engine:
 # create 'votes' table in database if it does not already exist
 def migrate_db(db: sqlalchemy.engine.base.Engine) -> None:
     """Creates the `votes` table if it doesn't exist."""
+    logger.info("migrate db")
     with db.connect() as conn:
         conn.execute(
             sqlalchemy.text(
@@ -69,6 +71,7 @@ db = None
 @app.before_request
 def init_db() -> sqlalchemy.engine.base.Engine:
     """Initiates connection to database and its' structure."""
+    logger.info("init db")
     global db
     if db is None:
         db = init_connection_pool()
@@ -100,6 +103,7 @@ def get_index_context(db: sqlalchemy.engine.base.Engine) -> dict:
         A dictionary containing information about votes.
     """
     votes = []
+    logger.info("get index content")
 
     with db.connect() as conn:
         # Execute the query and fetch all results
