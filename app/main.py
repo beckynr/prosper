@@ -10,6 +10,7 @@ from app import get_index_context, init_connection_pool, migrate_db, save_vote
 # db connection must be established within request context
 db = None
 
+app = Flask(__name__)
 
 @functions_framework.http
 def votes(request: flask.Request) -> flask.Response:
@@ -40,3 +41,6 @@ def votes(request: flask.Request) -> flask.Response:
         response="Invalid http request. Method not allowed, must be 'GET' or 'POST'",
         status=400,
     )
+
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=8080, debug=True)

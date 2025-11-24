@@ -24,8 +24,6 @@ import sqlalchemy
 
 from connect_tcp import connect_tcp_socket
 
-app = Flask(__name__)
-
 logger = logging.getLogger()
 
 
@@ -177,7 +175,3 @@ def save_vote(db: sqlalchemy.engine.base.Engine, team: str) -> Response:
         status=200,
         response=f"Vote successfully cast for '{team}' at time {time_cast}!",
     )
-
-
-if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=8080, debug=True)
