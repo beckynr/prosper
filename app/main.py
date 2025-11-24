@@ -1,5 +1,9 @@
 import flask
 
+import datetime
+import logging
+import os
+import sqlalchemy
 import functions_framework
 
 from app import get_index_context, init_connection_pool, migrate_db, save_vote
