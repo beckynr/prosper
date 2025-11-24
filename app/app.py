@@ -61,33 +61,6 @@ def migrate_db(db: sqlalchemy.engine.base.Engine) -> None:
 db = None
 
 
-# init_db lazily instantiates a database connection pool. Users of Cloud Run or
-# App Engine may wish to skip this lazy instantiation and connect as soon
-# as the function is loaded. This is primarily to help testing.
-@app.before_request
-def init_db() -> sqlalchemy.engine.base.Engine:
-    """Initiates connection to database and its' structure."""
-    logger.info("init db")
-    global db
-    if db is None:
-        db = init_connection_pool()
-        migrate_db(db)
-
-
-@app.route("/", methods=["GET"])
-def render_index() -> str:
-    """Serves the index page of the app."""
-    context = get_index_context(db)
-    return render_template("index.html", **context)
-
-
-@app.route("/votes", methods=["POST"])
-def cast_vote() -> Response:
-    """Processes a single vote from user."""
-    team = request.form["team"]
-    return save_vote(db, team)
-
-
 # get_index_context gets data required for rendering HTML application
 def get_index_context(db: sqlalchemy.engine.base.Engine) -> dict:
     """Retrieves data from the database about the votes.
