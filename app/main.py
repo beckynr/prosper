@@ -16,6 +16,8 @@ from app import get_index_context, init_connection_pool, migrate_db, save_vote
 db = None
 
 app = flask.Flask(__name__)
+logger = logging.getLogger()
+
 
 @functions_framework.http
 def votes(request: flask.Request) -> flask.Response:
