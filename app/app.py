@@ -18,8 +18,6 @@ import datetime
 import logging
 import os
 
-from flask import Flask, render_template, request, Response
-
 import sqlalchemy
 
 from connect_tcp import connect_tcp_socket

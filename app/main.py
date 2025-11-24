@@ -4,13 +4,14 @@ import functions_framework
 
 from app import get_index_context, init_connection_pool, migrate_db, save_vote
 
+
 ############ TABS vs. SPACES App for Cloud Functions ############
 
 # lazy global initialization
 # db connection must be established within request context
 db = None
 
-app = Flask(__name__)
+app = flask.Flask(__name__)
 
 @functions_framework.http
 def votes(request: flask.Request) -> flask.Response:
@@ -63,11 +64,11 @@ def init_db() -> sqlalchemy.engine.base.Engine:
 def render_index() -> str:
     """Serves the index page of the app."""
     context = get_index_context(db)
-    return render_template("index.html", **context)
+    return flask.render_template("index.html", **context)
 
 
 @app.route("/votes", methods=["POST"])
-def cast_vote() -> Response:
+def cast_vote() -> flask.Response:
     """Processes a single vote from user."""
-    team = request.form["team"]
+    team = flask.request.form["team"]
     return save_vote(db, team)
