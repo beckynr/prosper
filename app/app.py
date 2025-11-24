@@ -22,8 +22,6 @@ from flask import Flask, render_template, request, Response
 
 import sqlalchemy
 
-from connect_connector import connect_with_connector
-from connect_connector_auto_iam_authn import connect_with_connector_auto_iam_authn
 from connect_tcp import connect_tcp_socket
 
 app = Flask(__name__)
